@@ -2,10 +2,13 @@ const {createAuthorizationHeader} = require("ondc-crypto-sdk-nodejs")
 const signMessage = require("ondc-crypto-sdk-nodejs/lib/utility/index").signMessage
 const express=  require("express")
 const { default: axios } = require("axios")
+const cors = require("cors")
 require("dotenv").config()
 const app = express()
+app.use(cors())
 const PORT = process.env.PORT, PRIVATE_KEY = process.env.PRIVATE_KEY, UNIQUE_KEY = process.env.UNIQUE_KEY, BAPID = process.env.BAPID, GATEWAY_URL = process.env.GATEWAY_URL
 app.use(express.json())
+
 
 
 
@@ -24,6 +27,7 @@ async function generateHeader(message){
 app.post('/createHeader',async (req,res)=>{
   const response = await generateHeader(req.body)
 res.setHeader("Authorization",response)
+res.setHeader("Access-Control-Expose-Headers","*")
   return res.send({payload:req.body})
 })
 
