@@ -28,7 +28,7 @@ app.post('/createHeader',async (req,res)=>{
   const response = await generateHeader(req.body)
 res.setHeader("Authorization",response)
 res.setHeader("Access-Control-Expose-Headers","*")
-  return res.send({payload:req.body})
+  return res.send(req.body)
 })
 
 app.post("/search",async(req,res)=>{
